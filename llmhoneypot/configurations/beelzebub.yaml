@@ -1,0 +1,8 @@
+core:
+  logging:
+    level: "info"
+    format: "json"
+    debug: false
+  tracings:
+    beelzebub-cloud:
+      enabled: false

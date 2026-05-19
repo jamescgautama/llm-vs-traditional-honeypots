@@ -1,0 +1,35 @@
+services:
+  beelzebub:
+    image: m4r10/beelzebub:latest
+    container_name: beelzebub
+    restart: always
+    networks:
+      - llmhoneypot
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./configurations:/app/configurations
+    command: run -c /app/configurations/beelzebub.yaml -s /app/configurations/services/
+    ports:
+      - "22:22"
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        tag: beelzebub
+        fluentd-async: "true"
+
+  fluentbit:
+    image: fluent/fluent-bit:2.2
+    container_name: fluentbit
+    networks:
+      - llmhoneypot
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf:ro
+
+networks:
+  llmhoneypot:
+    driver: bridge

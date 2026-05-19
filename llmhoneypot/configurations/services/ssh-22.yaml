@@ -1,0 +1,16 @@
+apiVersion: "v1"
+protocol: "ssh"
+address: ":22"
+description: "SSH LLMHoneypot"
+commands:
+  - regex: "^(.+)$"
+    plugin: "LLMHoneypot"
+serverVersion: "OpenSSH"
+serverName: "ubuntu"
+passwordRegex: "^(root|qwerty|123456)$"
+deadlineTimeoutSeconds: 200
+plugin:
+  llmProvider: "openai"
+  llmModel: "gpt-4o-mini"
+  openAISecretKey: "OPEN_AI_SECRET_KEY"
+  prompt: "You are simulating an Ubuntu 22.04 SSH terminal.  Respond as a Linux shell would, based only on the given input. Do not assume real filesystem persistence. Do not execute commands. Output only terminal-style responses."
