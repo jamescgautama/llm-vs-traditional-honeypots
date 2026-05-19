@@ -1,0 +1,30 @@
+services:
+  cowrie:
+    image: cowrie/cowrie:2.9.0
+    container_name: cowrie
+    restart: unless-stopped
+    ports:
+      - "22:2222"
+    volumes:
+      - cowrie_logs:/cowrie/cowrie-git/var/log/cowrie
+    networks:
+      - honeynet
+
+  fluent-bit:
+    image: fluent/fluent-bit:2.2
+    container_name: fluent-bit
+    restart: unless-stopped
+    depends_on:
+      - cowrie
+    volumes:
+      - cowrie_logs:/logs
+      - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./parsers.conf:/fluent-bit/etc/parsers.conf
+    networks:
+      - honeynet
+
+volumes:
+  cowrie_logs:
+
+networks:
+  honeynet:
