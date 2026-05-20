@@ -59,3 +59,17 @@ Communication between the Honeypot Servers and the Database Server is encrypted 
 *   A self-signed certificate is generated automatically in `database/clickhouse/certs/`.
 *   Fluent Bit is configured with `tls On` and `tls.verify Off` to support the self-signed certificate.
 *   ClickHouse is configured to listen on port `8443` for HTTPS.
+
+## Project Findings & Lessons Learned
+
+### Comparative Results
+- **Engagement:** The LLM-powered honeypot (Beelzebub) achieved **6.5x more commands** and significantly higher session depth (4.36 vs 1.12) compared to the traditional honeypot (Cowrie).
+- **Attacker Retention:** While Cowrie saw more unique attackers, Beelzebub demonstrated stronger per-attacker retention and engagement.
+- **Performance:** LLM inference introduced significant **latency** (up to 3500ms), whereas the traditional approach was near-instantaneous.
+- **Optimal Model:** **ChatGPT 4o-mini** provided the best balance of latency, fidelity, and cost for SSH emulation.
+
+### Key Lessons Learned
+- **Infrastructure:** Local LLMs (e.g., LLaMa) are too resource-heavy for standard VPS environments; cloud APIs are currently the most practical solution for dynamic honeypots.
+- **Latency Impact:** Low latency is often more critical than high fidelity, especially for botnet interactions which constitute the vast majority of traffic.
+- **Tooling Risks:** Reliance on third-party plugins (e.g., Fluent-Bit SQLite) can introduce project risks if they are deprecated; centralized OLAP databases like ClickHouse offer better stability for log analysis.
+- **Prompt Engineering:** Critical for reducing hallucinations and maintaining the illusion of a real shell environment.
