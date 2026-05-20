@@ -2,17 +2,19 @@ apiVersion: 1
 
 datasources:
   - name: ClickHouse
-    type: vertamedia-clickhouse-datasource
+    type: grafana-clickhouse-datasource
     access: proxy
     isDefault: true
 
-    url: http://clickhouse:8123
+    url: https://clickhouse:8443
 
     jsonData:
       defaultDatabase: logs
       server: clickhouse
-      port: 8123
+      port: 8443
+      username: ${CLICKHOUSE_USER}
+      tlsSkipVerify: true
+      secure: true
 
     secureJsonData:
-      username: default
-      password: ""
+      password: ${CLICKHOUSE_PASSWORD}

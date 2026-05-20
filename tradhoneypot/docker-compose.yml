@@ -16,6 +16,11 @@ services:
     restart: unless-stopped
     depends_on:
       - cowrie
+    environment:
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST}
+      - CLICKHOUSE_PORT=${CLICKHOUSE_PORT}
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
     volumes:
       - cowrie_logs:/logs
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
