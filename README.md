@@ -13,22 +13,7 @@ An infrastructure framework and comparative study analyzing a Generative AI-powe
 
 This project is deployed across three separate servers to replicate a real-world edge deployment:
 
-```text
-[ LLM Honeypot Node (Beelzebub) ]
-  - SSH Server (Port 22)
-  - Fluent Bit (Log Agent) ---------\
-                                      \
-                                       v  TLS Encrypted (Port 8443)
-                                  [ Database Server ]
-                                    - ClickHouse OLAP DB
-                                    - Grafana (Port 3000)
-                                       ^
-                                       /  TLS Encrypted (Port 8443)
-                                      /
-[ Traditional Honeypot Node (Cowrie) ]
-  - SSH Server (Port 22 / 2222)
-  - Fluent Bit (Log Agent) ---------/
-```
+![Architecture Diagram](architecture.png)
 
 ## Tech Stack
 
